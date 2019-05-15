@@ -12,6 +12,8 @@
 
 ## Description
 
+This is an Epitech School project from the Advanced Mathematics 3rd year module.
+
 Starting from the pipe’s radius (in cm) with abscissas 0, 5, 10, 15 and 20 cm, and using cubic splines, this program displays the radii of N points that are evenly distributed along the pipe.
 
 In order to simplify the debugging process, this program also display the resolved linear system’s vector result in order to obtain the spline.
