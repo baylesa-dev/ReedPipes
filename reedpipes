@@ -1,0 +1,21 @@
+#!/usr/bin/env node
+
+// EntryPoint
+
+const arguments = process.argv.slice(2)
+
+if (arguments.length == 1 && (arguments[0] == '-h' || arguments[0] == '--help'))
+    usage()
+
+
+function usage() {
+    console.log("USAGE")
+    console.log("\t./reedpipes r0 r5 r10 r15 r20 n\n")
+    console.log("DESCRIPTION")
+    console.log("\tr0\tradius (in cm) of pipe at the 0cm abscissa")
+    console.log("\tr5\tradius (in cm) of pipe at the 5cm abscissa")
+    console.log("\tr10\tradius (in cm) of pipe at the 10cm abscissa")
+    console.log("\tr15\tradius (in cm) of pipe at the 15cm abscissa")
+    console.log("\tr20\tradius (in cm) of pipe at the 20cm abscissa")
+    console.log("\tn\tnumber of points needed to display the radius")
+}
