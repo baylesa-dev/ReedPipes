@@ -1,7 +1,8 @@
 #!/usr/bin/env node
 
-// EntryPoint
+// entryPoint
 
+// arguments management
 const arguments = process.argv.slice(2)
 
 if (arguments.length == 1 && (arguments[0] == '-h' || arguments[0] == '--help'))
@@ -31,7 +32,7 @@ for (i = 0; i < 5; i++) {
     rays.push(parseFloat(arguments[i]))
 }
 
-
+// compute vectors
 let vector1 = computeVector(0, rays) * 6
 let vector2 = computeVector(1, rays) * 6
 let vector3 = computeVector(2, rays) * 6
@@ -44,6 +45,27 @@ vectors.push(0)
 
 displayVectors(vectors)
 
+// compute abscissas
+let abscissas = []
+let interval = 20.0 / (points - 1.0)
+for (i = 0; i < points; i++)
+    abscissas.push(interval * i)
+
+let radius = []
+abscissas.forEach(abscissa => {
+    if (abscissa < 5)
+        radius.push(computeRadius(vectors[1], vectors[0], abscissa, 5.0, 0.0, rays[1], rays[0]))
+    else if (abscissa < 10)
+        radius.push(computeRadius(vectors[2], vectors[1], abscissa, 10.0, 5.0, rays[2], rays[1]))
+    else if (abscissa < 15)
+        radius.push(computeRadius(vectors[3], vectors[2], abscissa, 15.0, 10.0, rays[3], rays[2]))
+    else
+        radius.push(computeRadius(vectors[4], vectors[3], abscissa, 20.0, 15.0, rays[4], rays[3]))
+})
+
+displayRadius(abscissas, radius)
+
+// usefull functions
 function computeVector(i, rays) {
     return (computeFx(i + 1, rays) - computeFx(i, rays)) / (((i + 2) * 5.0) - (i * 5.0))
 }
@@ -60,6 +82,16 @@ function displayVectors(vectors) {
         else
             process.stdout.write("" + value.toFixed(1))
         index !== 4 ? process.stdout.write(", ") : console.log("]")
+    })
+}
+
+function computeRadius(v, v1, x, xi, xi1, fx, fx1) {
+    return -v1 * Math.pow(x - xi, 3) / 30.0 + v * Math.pow(x - xi1, 3) / 30.0 - (fx1 / 5.0 - (5.0 * v1 / 6.0)) * (x - xi) + (fx / 5.0 - 5.0 * v / 6.0) * (x - xi1)
+}
+
+function displayRadius(abscissas, radius) {
+    radius.forEach((rad, index) => {
+        console.log("abscissa: " + abscissas[index].toFixed(1) + " cm\tradius: " + radius[index].toFixed(1) + " cm")
     })
 }
 
