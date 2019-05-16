@@ -74,6 +74,11 @@ function computeFx(i, rays) {
     return (rays[i + 1] - rays[i]) / (((i + 1) * 5.0) - (i * 5.0))
 }
 
+function computeRadius(v, v1, x, xi, xi1, fx, fx1) {
+    return -v1 * Math.pow(x - xi, 3) / 30.0 + v * Math.pow(x - xi1, 3) / 30.0 - (fx1 / 5.0 - (5.0 * v1 / 6.0)) * (x - xi) + (fx / 5.0 - 5.0 * v / 6.0) * (x - xi1)
+}
+
+// display functions
 function displayVectors(vectors) {
     process.stdout.write("vectors results: [")
     vectors.forEach((value, index) => {
@@ -83,10 +88,6 @@ function displayVectors(vectors) {
             process.stdout.write("" + value.toFixed(1))
         index !== 4 ? process.stdout.write(", ") : console.log("]")
     })
-}
-
-function computeRadius(v, v1, x, xi, xi1, fx, fx1) {
-    return -v1 * Math.pow(x - xi, 3) / 30.0 + v * Math.pow(x - xi1, 3) / 30.0 - (fx1 / 5.0 - (5.0 * v1 / 6.0)) * (x - xi) + (fx / 5.0 - 5.0 * v / 6.0) * (x - xi1)
 }
 
 function displayRadius(abscissas, radius) {
