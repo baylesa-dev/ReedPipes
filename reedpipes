@@ -54,16 +54,13 @@ function computeFx(i, rays) {
 
 function displayVectors(vectors) {
     process.stdout.write("vectors results: [")
-    for (i = 0; i < 5; i++) {
-        if (vectors[i] > -0.05 && vectors[i] < 0.01)
-            process.stdout.write("" + Math.abs(vectors[i]).toFixed(1))
+    vectors.forEach((value, index) => {
+        if (value > -0.05 && value < 0.01)
+            process.stdout.write("" + Math.abs(value).toFixed(1))
         else
-            process.stdout.write("" + vectors[i].toFixed(1))
-        if (i == 4)
-            process.stdout.write("]\n")
-        else
-            process.stdout.write(", ")
-    }
+            process.stdout.write("" + value.toFixed(1))
+        index !== 4 ? process.stdout.write(", ") : console.log("]")
+    })
 }
 
 function usage() {
