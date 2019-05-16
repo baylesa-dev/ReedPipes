@@ -7,6 +7,64 @@ const arguments = process.argv.slice(2)
 if (arguments.length == 1 && (arguments[0] == '-h' || arguments[0] == '--help'))
     usage()
 
+if (arguments.length != 6) {
+    console.log("ERROR: Maybe you should read the README file or launch --help (or -h) option.")
+    process.exit(84)
+}
+
+arguments.forEach((element, index) => {
+    if (index < 5) {
+        if (parseFloat(element) <= 0) {
+            console.log("ERROR: radius inputs must be higher than zero.")
+        }
+    } else {
+        if (parseInt(element) <= 0) {
+            console.log("ERROR: number of points needed to display radius input must be higher than zero.")
+        }
+    }
+});
+
+let points = arguments[arguments.length - 1]
+
+let rays = []
+for (i = 0; i < 5; i++) {
+    rays.push(parseFloat(arguments[i]))
+}
+
+
+let vector1 = computeVector(0, rays) * 6
+let vector2 = computeVector(1, rays) * 6
+let vector3 = computeVector(2, rays) * 6
+
+let vectors = [0]
+vectors.push((vector1 - 0.5 * ((-vector1 + 4 * vector2 - vector3) / 7)) / 2)
+vectors.push((-vector1 + 4 * vector2 - vector3) / 7)
+vectors.push((vector3 - 0.5 * ((-vector1 + 4 * vector2 - vector3) / 7)) / 2)
+vectors.push(0)
+
+displayVectors(vectors)
+
+function computeVector(i, rays) {
+    return (computeFx(i + 1, rays) - computeFx(i, rays)) / (((i + 2) * 5.0) - (i * 5.0))
+}
+
+function computeFx(i, rays) {
+    return (rays[i + 1] - rays[i]) / (((i + 1) * 5.0) - (i * 5.0))
+}
+
+function displayVectors(vectors) {
+    process.stdout.write("vectors results: [")
+    for (i = 0; i < 5; i++) {
+        if (vectors[i] > -0.05 && vectors[i] < 0.01)
+            process.stdout.write("" + Math.abs(vectors[i]).toFixed(1))
+        else
+            process.stdout.write("" + vectors[i].toFixed(1))
+        if (i == 4)
+            process.stdout.write("]\n")
+        else
+            process.stdout.write(", ")
+    }
+}
 
 function usage() {
     console.log("USAGE")
